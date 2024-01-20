@@ -23,8 +23,6 @@ async function filterJobs(formData: FormData) {
   });
 
   redirect(`/?${searchParams.toString()}`);
-
-
 }
 
 const JobFilterSidebar = async () => {
