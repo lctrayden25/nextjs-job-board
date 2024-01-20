@@ -14,6 +14,18 @@ pnpm dev
 bun dev
 ```
 
+If update the prisma schema, run:
+
+```bash
+npx prisma generate   #refresh and update the schmea
+```
+
+Open the prisma studio, run:
+
+```bash
+npx prisma studio
+```
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
