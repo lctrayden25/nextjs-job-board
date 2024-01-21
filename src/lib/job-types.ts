@@ -6,3 +6,5 @@ export const jobTypes = [
     "Internship",
     "Volunteer"
 ]
+
+export const locationType = ["Remote", "On-site", "Hybrid"]
