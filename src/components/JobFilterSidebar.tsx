@@ -7,6 +7,7 @@ import { Button } from "./ui/button";
 import { JobFilterValues, jobFilterSchema } from "@/lib/validation";
 import { redirect } from "next/navigation";
 import FormSubmitButton from "./FormSubmitButton";
+import prisma from "@/lib/prisma"
 
 async function filterJobs(formData: FormData) {
   "use server";
@@ -31,7 +32,7 @@ interface JobFilterSidebarProps {
 }
 
 const JobFilterSidebar = async ({ defaultValues }: JobFilterSidebarProps) => {
-  const distinctLocation = (await prisma?.job
+  const distinctLocation = (await prisma.job
     ?.findMany({
       where: { approved: true },
       select: { location: true },

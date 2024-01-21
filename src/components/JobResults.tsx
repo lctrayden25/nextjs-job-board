@@ -2,6 +2,7 @@ import React from "react";
 import JobListItem from "./JobListItem";
 import { JobFilterValues } from "@/lib/validation";
 import { Prisma } from "@prisma/client";
+import prisma from "@/lib/prisma";
 
 interface JobResultsProps {
   filterValues: JobFilterValues;
@@ -37,7 +38,7 @@ const JobResults = async ({
     ],
   };
 
-  const jobs = await prisma?.job.findMany({
+  const jobs = await prisma.job.findMany({
     where,
     orderBy: { createdAt: "desc" },
   });

@@ -21,6 +21,7 @@ import { Label } from "@/components/ui/label";
 import RichTextEditor from "@/components/RichTextEditor";
 import { draftToMarkdown } from "markdown-draft-js";
 import LoadingButton from "@/components/LoadingButton";
+import { createJobPosition } from "./actions";
 
 const NewJobForm = () => {
   const form = useForm<CreateJobValues>({
@@ -38,9 +39,24 @@ const NewJobForm = () => {
   } = form;
 
   const onSubmit = async (values: CreateJobValues) => {
-    alert(JSON.stringify(values, null, 2))
-  };
+    // alert(JSON.stringify(values, null, 2));
 
+    let formData = new FormData();
+    Object.entries(values)?.forEach(([key, value]) => {
+      if (value) {
+        formData.append(key, value);
+      }
+    });
+
+    // alert(JSON.stringify(formData, null, 2));
+
+    try {
+      await createJobPosition(formData);
+    } catch (error) {
+      console.log(error);
+      alert("Something went wrong");
+    }
+  };
 
   return (
     <main className="m-auto my-10 max-w-3xl space-y-10">
@@ -136,12 +152,16 @@ const NewJobForm = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Location</FormLabel>
-                  <Select {...field} defaultValue={""} onChange={(e) => {
-                    field.onChange(e)
-                    if(e.currentTarget.value === "Remote"){
-                        trigger("location")
-                    }
-                  }}>
+                  <Select
+                    {...field}
+                    defaultValue={""}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      if (e.currentTarget.value === "Remote") {
+                        trigger("location");
+                      }
+                    }}
+                  >
                     <option value={""} hidden>
                       Select an option
                     </option>
