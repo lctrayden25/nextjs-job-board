@@ -18,6 +18,9 @@ import { jobTypes, locationType } from "@/lib/job-types";
 import LocationInput from "@/components/LocationInput";
 import { X } from "lucide-react";
 import { Label } from "@/components/ui/label";
+import RichTextEditor from "@/components/RichTextEditor";
+import { draftToMarkdown } from "markdown-draft-js";
+import LoadingButton from "@/components/LoadingButton";
 
 const NewJobForm = () => {
   const form = useForm<CreateJobValues>({
@@ -35,8 +38,9 @@ const NewJobForm = () => {
   } = form;
 
   const onSubmit = async (values: CreateJobValues) => {
-    console.log(values);
+    alert(JSON.stringify(values, null, 2))
   };
+
 
   return (
     <main className="m-auto my-10 max-w-3xl space-y-10">
@@ -66,7 +70,7 @@ const NewJobForm = () => {
                 <FormItem>
                   <FormLabel>Job title</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g. Front Developer" {...field} />
+                    <Input placeholder="e.g. Frontend Developer" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -132,7 +136,12 @@ const NewJobForm = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Location</FormLabel>
-                  <Select {...field} defaultValue={""}>
+                  <Select {...field} defaultValue={""} onChange={(e) => {
+                    field.onChange(e)
+                    if(e.currentTarget.value === "Remote"){
+                        trigger("location")
+                    }
+                  }}>
                     <option value={""} hidden>
                       Select an option
                     </option>
@@ -221,6 +230,41 @@ const NewJobForm = () => {
                 />
               </div>
             </div>
+            <FormField
+              control={control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <Label onClick={() => setFocus("description")}>
+                    Description
+                  </Label>
+                  <FormControl>
+                    <RichTextEditor
+                      onChange={(draft) =>
+                        field.onChange(draftToMarkdown(draft))
+                      }
+                      ref={field.ref}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={control}
+              name="salary"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Salary</FormLabel>
+                  <FormControl>
+                    <Input {...field} type="number" min={0} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <LoadingButton type="submit" loading={isSubmitting}>
+              Submit
+            </LoadingButton>
           </form>
         </Form>
       </div>
