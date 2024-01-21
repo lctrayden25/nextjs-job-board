@@ -70,7 +70,7 @@ const JobFilterSidebar = async ({ defaultValues }: JobFilterSidebarProps) => {
             </Select>
           </div>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="location">Search</Label>
+            <Label htmlFor="location">Location</Label>
             <Select
               id="location"
               name="location"
