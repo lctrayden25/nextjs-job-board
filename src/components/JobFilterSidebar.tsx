@@ -6,6 +6,7 @@ import { jobTypes } from "@/lib/job-types";
 import { Button } from "./ui/button";
 import { JobFilterValues, jobFilterSchema } from "@/lib/validation";
 import { redirect } from "next/navigation";
+import FormSubmitButton from "./FormSubmitButton";
 
 async function filterJobs(formData: FormData) {
   "use server";
@@ -55,7 +56,11 @@ const JobFilterSidebar = async ({ defaultValues }: JobFilterSidebarProps) => {
           </div>
           <div className="flex flex-col gap-2">
             <Label htmlFor="type">Type</Label>
-            <Select id="type" name="type" defaultValue={defaultValues?.type || ""}>
+            <Select
+              id="type"
+              name="type"
+              defaultValue={defaultValues?.type || ""}
+            >
               <option value="">All type</option>
               {jobTypes?.map((type) => (
                 <option value={type} key={type}>
@@ -89,9 +94,9 @@ const JobFilterSidebar = async ({ defaultValues }: JobFilterSidebarProps) => {
             />
             <Label htmlFor="remote">Remote jobs</Label>
           </div>
-          <Button type="submit" className="w-full">
+          <FormSubmitButton type="submit" className="w-full">
             Filter jobs
-          </Button>
+          </FormSubmitButton>
         </div>
       </form>
     </aside>
