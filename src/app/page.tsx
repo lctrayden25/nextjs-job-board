@@ -29,7 +29,7 @@ const getTitle = ({ q, type, location, remote }: JobFilterValues) => {
   return `${titlePrefix}${titleSuffic}`;
 };
 
-export const generateMedata = ({
+export const generateMetadata = ({
   searchParams: { q, type, location, remote },
 }: PageProps): Metadata => {
   return {
